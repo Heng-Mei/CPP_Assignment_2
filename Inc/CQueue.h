@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:11:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-24 16:24:15
+ * @LastEditTime: 2023-10-24 21:01:46
  * @FilePath: \Assignment_2\Inc\CQueue.h
  */
 #ifndef CQUEUE_H
@@ -20,7 +20,7 @@ private:
 public:
     CQueue(int nInitSize, int nIncStep); // 初始大小，队列增长步长；
     ~CQueue();                           // 释放内存
-    bool in(string ele);                 // 单词如队，若当前存储区不足，自动增长（步长为m_nIncStep），入队成功返回true。
+    bool in(const string &ele);          // 单词如队，若当前存储区不足，自动增长（步长为m_nIncStep），入队成功返回true。
     bool out(string &ele);               // 队头单词出队，若队列空，返回false。
     int size() const;                    // 队列内当前的元素个数
     // 其他必要成员函数（自定义）
@@ -30,12 +30,12 @@ public:
     bool isEmpty(void) const;
     bool isFull(void) const;
     void outPrint(void);
-    void inLine(string &line);
+    void inLine(const string &line);
 };
 
 inline CQueue::CQueue(int nInitSize = 10, int nIncStep = 5) : m_nSize(nInitSize), m_nIncStep(nIncStep)
 {
-    m_pBuf = new string[m_nSize]; 
+    m_pBuf = new string[m_nSize];
 }
 
 inline CQueue::~CQueue()

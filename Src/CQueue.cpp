@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:18:42
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-24 16:24:34
+ * @LastEditTime: 2023-10-24 20:55:30
  * @FilePath: \Assignment_2\Src\CQueue.cpp
  */
 #include "CQueue.h"
@@ -14,7 +14,7 @@ using namespace std;
  * @param {string} ele
  * @return {bool} 入队成功返回true。
  */
-bool CQueue::in(string ele)
+bool CQueue::in(const string &ele)
 {
     // 如果队列已满，则扩展队列
     if (this->isFull())
@@ -158,13 +158,30 @@ void CQueue::outPrint(void)
     }
 }
 
-
 /**
  * @description: 读入一行入队
  * @param {string} &line
  * @return {void}
  */
-void CQueue::inLine(string &line)
+void CQueue::inLine(const string &line)
 {
-    // TODO 一行string入队  
+    // 定义一个临时变量
+    string tempWord;
+    // 遍历字符串中的每一个字符
+    for (auto &&ch : line)
+    {
+        // 如果当前字符是空格或者当前字符是最后一个字符
+        if (ch == ' ' || &ch == &line.back())
+        {
+            // 调用in函数，将临时变量中的字符串传入
+            this->in(tempWord);
+            // 将临时变量清空
+            tempWord.clear();
+        }
+        // 否则，将当前字符添加到临时变量中
+        else
+        {
+            tempWord += ch;
+        }
+    }
 }

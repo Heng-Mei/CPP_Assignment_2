@@ -30,11 +30,15 @@ void CGramCheck::checkGram(void)
     // 循环检查文件中的每一行
     while (this->file.eof() == false)
     {
-        // 读取一行
-        char newLine[1024];
-        this->file.getline(newLine, 1024);
-        // 将读取的行转换为string
-        string line = newLine;
+        // // 读取一行
+        string line;
+        getline(this->file, line);
+        cout << line << endl;
         // TODO 一行入队并开始语法检查
+        CQueue lineQueue;
+        lineQueue.inLine(line);
+        lineQueue.outPrint();
+        lineQueue.outPrint();
+        lineQueue.outPrint();
     }
 }
