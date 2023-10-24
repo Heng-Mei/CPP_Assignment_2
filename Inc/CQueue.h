@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:11:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-24 13:15:20
+ * @LastEditTime: 2023-10-24 16:24:15
  * @FilePath: \Assignment_2\Inc\CQueue.h
  */
 #ifndef CQUEUE_H
@@ -30,9 +30,10 @@ public:
     bool isEmpty(void) const;
     bool isFull(void) const;
     void outPrint(void);
+    void inLine(string &line);
 };
 
-inline CQueue::CQueue(int nInitSize, int nIncStep) : m_nSize(nInitSize), m_nIncStep(nIncStep)
+inline CQueue::CQueue(int nInitSize = 10, int nIncStep = 5) : m_nSize(nInitSize), m_nIncStep(nIncStep)
 {
     m_pBuf = new string[m_nSize]; 
 }

@@ -11,7 +11,8 @@
     "utility": "cpp",
     "fstream": "cpp",
     "new": "cpp",
-    "*.tcc": "cpp"
+    "*.tcc": "cpp",
+    "iosfwd": "cpp"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",

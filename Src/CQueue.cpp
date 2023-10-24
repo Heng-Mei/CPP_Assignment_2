@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:18:42
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-24 13:33:30
+ * @LastEditTime: 2023-10-24 16:24:34
  * @FilePath: \Assignment_2\Src\CQueue.cpp
  */
 #include "CQueue.h"
@@ -156,4 +156,15 @@ void CQueue::outPrint(void)
     {
         cout << "The Queue is empty!" << endl;
     }
+}
+
+
+/**
+ * @description: 读入一行入队
+ * @param {string} &line
+ * @return {void}
+ */
+void CQueue::inLine(string &line)
+{
+    // TODO 一行string入队  
 }
