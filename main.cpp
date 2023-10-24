@@ -5,21 +5,20 @@ using namespace std;
 
 int main()
 {
-    CQueue cq(3, 2);
+    /* CQueue cq(3, 2);
 
-    string tempString;
-    cin >> tempString ;
-    cq.in(tempString);
-    cq.in(tempString);
-    cq.in(tempString);
-    cq.in(tempString);
+    cq.in("hello");
+    cq.in("world");
+    cq.in("good");
+    cq.in("morning");
 
-    cq.out(tempString);
-    cout << "tempString = " << tempString << endl;
+    cq.outPrint();
+    cq.outPrint();
+    cq.outPrint();
+    cq.outPrint();
+    cq.outPrint(); */
 
-    cq.out(tempString);
-    cout << "tempString = " << tempString << endl;
-
+    
 
     //(1)定义CGramCheck对象
     //(2)打开文件（若出错，则提示，并程序结束返回）

@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:18:42
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-23 21:37:24
+ * @LastEditTime: 2023-10-24 13:33:30
  * @FilePath: \Assignment_2\Src\CQueue.cpp
  */
 #include "CQueue.h"
@@ -16,10 +16,12 @@ using namespace std;
  */
 bool CQueue::in(string ele)
 {
-    if (this->size() == this->m_nSize)
+    // 如果队列已满，则扩展队列
+    if (this->isFull())
     {
         this->extend();
     }
+    // 将元素ele放入队列
     m_pBuf[this->size()] = ele;
     return true;
 }
@@ -31,16 +33,21 @@ bool CQueue::in(string ele)
  */
 bool CQueue::out(string &ele)
 {
+    // 获取队列大小
     int cqSize = this->size();
-    if (cqSize == 0)
+    // 如果队列为空，则返回false
+    if (this->size() == 0)
     {
         return false;
     }
+    // 将队列第一个元素赋值给ele
     ele = m_pBuf[0];
+    // 循环遍历队列，将队列元素向前移动一个位置
     for (int i = 0; i < cqSize; i++)
     {
         m_pBuf[i] = m_pBuf[i + 1];
     }
+    // 返回true
     return true;
 }
 
@@ -50,6 +57,7 @@ bool CQueue::out(string &ele)
  */
 int CQueue::size() const
 {
+    // 遍历m_nSize次，每次取出一个字符串，如果字符串长度为0，则返回该字符串的索引，否则返回m_nSize
     for (int i = 0; i < m_nSize; i++)
     {
         if (m_pBuf[i].size() == 0)
@@ -67,26 +75,85 @@ int CQueue::size() const
  */
 bool CQueue::extend(int step)
 {
+    // 如果扩展步数小于等于0，则返回false
     if (step <= 0)
     {
         return false;
     }
+    // 创建一个新的字符串数组，大小为当前数组大小加上扩展步数
     string *newPtr = new string[this->m_nSize + step];
+    // 将当前数组中的元素复制到新数组中
     for (int i = 0; i < this->m_nSize; i++)
     {
         newPtr[i] = this->m_pBuf[i];
     }
+    // 释放当前指针分配的空间
     delete[] this->m_pBuf;
+    // 更新地址
     this->m_pBuf = newPtr;
+    // 更新大小
     this->m_nSize += step;
+    // 返回true
     return true;
 }
 
 /**
  * @description: 增加IncStep的长度
- * @return {*}
+ * @return {void}
  */
 void CQueue::extend(void)
 {
+    // 扩展m_nIncStep步
     this->extend(this->m_nIncStep);
+}
+
+/**
+ * @description: 清空队列
+ * @return {void}
+ */
+void CQueue::clear(void)
+{
+    // 删除m_pBuf指针指向的内存空间
+    delete[] this->m_pBuf;
+    // 重新分配m_pBuf指针指向的内存空间
+    this->m_pBuf = new string[this->m_nSize];
+}
+
+/**
+ * @description: 判断队列是否为空
+ * @return {bool} 空返回true
+ */
+bool CQueue::isEmpty(void) const
+{
+    // 判断队列是否为空
+    return this->size() == 0;
+}
+
+/**
+ * @description: 判断队列是否满了
+ * @return {bool} 满了返回true
+ */
+bool CQueue::isFull(void) const
+{
+    // 返回队列大小是否等于队列容量
+    return this->size() == this->m_nSize;
+}
+
+/**
+ * @description: 出队并输出
+ * @return {void}
+ */
+void CQueue::outPrint(void)
+{
+    // 定义临时字符串
+    string tempString;
+    // 出队是否成功
+    if (this->out(tempString))
+    {
+        cout << tempString << endl;
+    }
+    else
+    {
+        cout << "The Queue is empty!" << endl;
+    }
 }

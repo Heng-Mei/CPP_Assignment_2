@@ -1,3 +1,9 @@
+/*
+ * @Date: 2023-10-23 16:11:50
+ * @LastEditors: Heng-Mei l888999666y@gmail.com
+ * @LastEditTime: 2023-10-24 13:15:20
+ * @FilePath: \Assignment_2\Inc\CQueue.h
+ */
 #ifndef CQUEUE_H
 #define CQUEUE_H
 
@@ -20,6 +26,10 @@ public:
     // 其他必要成员函数（自定义）
     bool extend(int step);
     void extend(void);
+    void clear(void);
+    bool isEmpty(void) const;
+    bool isFull(void) const;
+    void outPrint(void);
 };
 
 inline CQueue::CQueue(int nInitSize, int nIncStep) : m_nSize(nInitSize), m_nIncStep(nIncStep)
