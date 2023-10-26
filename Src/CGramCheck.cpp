@@ -1,3 +1,9 @@
+/*
+ * @Date: 2023-10-24 15:15:50
+ * @LastEditors: Heng-Mei l888999666y@gmail.com
+ * @LastEditTime: 2023-10-26 12:49:46
+ * @FilePath: \Assignment_2\Src\CGramCheck.cpp
+ */
 #include "CGramCheck.h"
 
 /**
@@ -12,7 +18,6 @@ bool CGramCheck::openCPP(const char *fileName)
     // 返回文件是否打开
     return this->file.is_open();
 }
-
 
 /**
  * @description: 语法检查
@@ -37,8 +42,24 @@ void CGramCheck::checkGram(void)
         // TODO 一行入队并开始语法检查
         CQueue lineQueue;
         lineQueue.inLine(line);
-        lineQueue.outPrint();
-        lineQueue.outPrint();
-        lineQueue.outPrint();
+        lineQueue.outLine();
+
+        this->lineCount++;
     }
+}
+
+/**
+ * @description: 输出结果
+ * @param {char} *fileName
+ * @return {void}
+ */
+void CGramCheck::outLog(const char *fileName)
+{
+    // 打开文件
+    ofstream outFile;
+    outFile.open(fileName, ios::out);
+    // 输出结果
+    outFile << "The file name is: " << fileName << endl;
+    outFile << "The line count is: " << this->lineCount << endl;
+    outFile.close();
 }

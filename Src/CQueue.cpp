@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:18:42
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-24 20:55:30
+ * @LastEditTime: 2023-10-25 18:32:12
  * @FilePath: \Assignment_2\Src\CQueue.cpp
  */
 #include "CQueue.h"
@@ -16,6 +16,10 @@ using namespace std;
  */
 bool CQueue::in(const string &ele)
 {
+    if (ele.size() == 0)
+    {
+        return true;
+    }
     // 如果队列已满，则扩展队列
     if (this->isFull())
     {
@@ -173,6 +177,10 @@ void CQueue::inLine(const string &line)
         // 如果当前字符是空格或者当前字符是最后一个字符
         if (ch == ' ' || &ch == &line.back())
         {
+            if (ch != ' ')
+            {
+                tempWord += ch;
+            }
             // 调用in函数，将临时变量中的字符串传入
             this->in(tempWord);
             // 将临时变量清空
@@ -183,5 +191,17 @@ void CQueue::inLine(const string &line)
         {
             tempWord += ch;
         }
+    }
+}
+
+/**
+ * @description: 出队所有元素并输出
+ * @return {void}
+ */
+void CQueue::outLine(void)
+{
+    while (this->isEmpty() == false)
+    {
+        this->outPrint();
     }
 }
