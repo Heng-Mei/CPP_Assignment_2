@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 21:07:00
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-26 12:52:26
+ * @LastEditTime: 2023-10-26 20:40:59
  * @FilePath: \Assignment_2\main.cpp
  */
 #include <iostream>
@@ -26,6 +26,7 @@ int main()
     cq.outPrint(); */
 
     CGramCheck gc;
+    
     if (gc.openCPP("./Res/tobecheck.cpp") == false)
     {
         cerr << "The file not be found!" << endl;

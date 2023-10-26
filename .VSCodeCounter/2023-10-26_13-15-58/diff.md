@@ -1,0 +1,19 @@
+# Diff Summary
+
+Date : 2023-10-26 13:15:58
+
+Directory b:\\C++\\Assignments\\Assignment_2
+
+Total : 0 files,  0 codes, 0 comments, 0 blanks, all 0 lines
+
+[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
+
+## Languages
+| language | files | code | comment | blank | total |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+
+## Directories
+| path | files | code | comment | blank | total |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+
+[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)

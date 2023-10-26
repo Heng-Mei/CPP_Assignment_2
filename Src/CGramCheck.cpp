@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-26 12:49:46
+ * @LastEditTime: 2023-10-26 20:43:47
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -42,6 +42,8 @@ void CGramCheck::checkGram(void)
         // TODO 一行入队并开始语法检查
         CQueue lineQueue;
         lineQueue.inLine(line);
+
+        
         lineQueue.outLine();
 
         this->lineCount++;
@@ -55,8 +57,15 @@ void CGramCheck::checkGram(void)
  */
 void CGramCheck::outLog(const char *fileName)
 {
+    cout << "Start to output the result." << endl;
     // 打开文件
     ofstream outFile;
+    outFile.open(fileName, ios::in);
+    if (outFile.is_open() == true)
+    {
+        cout << "The file exists, and the file will be overwritten." << endl;
+        outFile.close();
+    }  
     outFile.open(fileName, ios::out);
     // 输出结果
     outFile << "The file name is: " << fileName << endl;
