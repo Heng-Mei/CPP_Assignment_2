@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 21:07:00
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-27 16:31:29
+ * @LastEditTime: 2023-10-27 20:24:56
  * @FilePath: \Assignment_2\main.cpp
  */
 #include <iostream>
@@ -25,7 +25,6 @@ int main()
     cq.outPrint();
     cq.outPrint(); */
 
-    
     CGramCheck gc;
     
     if (gc.openCPP("./Res/tobecheck.cpp") == false)

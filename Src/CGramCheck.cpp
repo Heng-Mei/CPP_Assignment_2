@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-27 16:39:20
+ * @LastEditTime: 2023-10-27 20:22:38
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -43,7 +43,6 @@ void CGramCheck::checkGram(void)
         CQueue lineQueue;
         lineQueue.inLine(line);
         this->semicolonResult.push_back(CGramCheck::checkSemicolon(lineQueue));
-        lineQueue.inLine(line);
         lineQueue.outLine();
         this->lineCount++;
     }
@@ -74,17 +73,17 @@ void CGramCheck::outLog(const char *fileName)
     outFile << "The semicolon result is: " << endl;
 
     bool semicolonTotalFlag = false;
-    for (auto &&i : this->semicolonResult)
+    for (int i = 0; i < this->semicolonResult.size(); i++)
     {
-        if (i == 1)
+        if (semicolonResult[i] == 1)
         {
-            outFile << "Line " << this->lineCount << ": "
+            outFile << "Line " << i + 1 << ": "
                     << "Missing semicolon." << endl;
             semicolonTotalFlag = true;
         }
-        else if (i == -1)
+        else if (semicolonResult[i] == -1)
         {
-            outFile << "Line " << this->lineCount << ": "
+            outFile << "Line " << i + 1 << ": "
                     << "Extra semicolon." << endl;
             semicolonTotalFlag = true;
         }
@@ -103,7 +102,7 @@ void CGramCheck::outLog(const char *fileName)
  * @param {CQueue} line
  * @return {int} -1:多余分号 0:OK 1:缺少分号
  */
-int CGramCheck::checkSemicolon(CQueue &line)
+int CGramCheck::checkSemicolon(CQueue line)
 {
     if (line.size() == 0)
     {
@@ -140,6 +139,6 @@ int CGramCheck::checkSemicolon(CQueue &line)
     {
         return 1;
     }
-    
+
     return 0;
 }
