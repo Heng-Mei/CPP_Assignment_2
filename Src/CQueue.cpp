@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:18:42
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-25 18:32:12
+ * @LastEditTime: 2023-10-27 16:23:42
  * @FilePath: \Assignment_2\Src\CQueue.cpp
  */
 #include "CQueue.h"
@@ -45,12 +45,13 @@ bool CQueue::out(string &ele)
         return false;
     }
     // 将队列第一个元素赋值给ele
-    ele = m_pBuf[0];
+    ele = this->m_pBuf[0];
     // 循环遍历队列，将队列元素向前移动一个位置
-    for (int i = 0; i < cqSize; i++)
+    for (int i = 0; i < cqSize - 1; i++)
     {
-        m_pBuf[i] = m_pBuf[i + 1];
+        this->m_pBuf[i] = this->m_pBuf[i + 1];
     }
+    this->m_pBuf[cqSize - 1].clear();
     // 返回true
     return true;
 }
@@ -174,8 +175,8 @@ void CQueue::inLine(const string &line)
     // 遍历字符串中的每一个字符
     for (auto &&ch : line)
     {
-        // 如果当前字符是空格或者当前字符是最后一个字符
-        if (ch == ' ' || &ch == &line.back())
+        /* // 如果当前字符是空格或者当前字符是最后一个字符
+        if (CQueue::isLetter(ch) == false || &ch == &line.back())
         {
             if (ch != ' ')
             {
@@ -190,6 +191,28 @@ void CQueue::inLine(const string &line)
         else
         {
             tempWord += ch;
+        } */
+        if (CQueue::isLetter(ch) == false)
+        {
+            // 调用in函数，将临时变量中的字符串传入
+            this->in(tempWord);
+            // 将临时变量清空
+            tempWord.clear();
+            if (ch != ' ')
+            {
+                tempWord += ch;
+                this->in(tempWord);
+                tempWord.clear();
+            }
+        }
+        else
+        {
+            tempWord += ch;
+            if (&ch == &line.back())
+            {
+                this->in(tempWord);
+                tempWord.clear();
+            }
         }
     }
 }
@@ -204,4 +227,14 @@ void CQueue::outLine(void)
     {
         this->outPrint();
     }
+}
+
+/**
+ * @description: 判断一个字符是否是字母
+ * @param {char} ch
+ * @return {bool} 字母返回true
+ */
+bool CQueue::isLetter(char ch)
+{
+    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
 }

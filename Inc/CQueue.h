@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:11:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-25 18:30:41
+ * @LastEditTime: 2023-10-27 12:52:34
  * @FilePath: \Assignment_2\Inc\CQueue.h
  */
 #ifndef CQUEUE_H
@@ -32,6 +32,7 @@ public:
     void outPrint(void);
     void inLine(const string &line);
     void outLine(void);
+    static bool isLetter(char ch);
 };
 
 inline CQueue::CQueue(int nInitSize = 10, int nIncStep = 5) : m_nSize(nInitSize), m_nIncStep(nIncStep)

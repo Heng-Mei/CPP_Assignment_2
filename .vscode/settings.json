@@ -12,7 +12,8 @@
     "fstream": "cpp",
     "new": "cpp",
     "*.tcc": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "vector": "cpp"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",
@@ -71,5 +72,7 @@
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "todo-tree.tree.showCountsInTree": true,
-  "C_Cpp_Runner.msvcSecureNoWarnings": false
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "makefile.makePath": "mingw32-make.exe",
+  "makefile.makefilePath": "${workspaceFolder}\\build"
 }

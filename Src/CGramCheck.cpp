@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-26 20:43:47
+ * @LastEditTime: 2023-10-27 16:39:20
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -42,10 +42,9 @@ void CGramCheck::checkGram(void)
         // TODO 一行入队并开始语法检查
         CQueue lineQueue;
         lineQueue.inLine(line);
-
-        
+        this->semicolonResult.push_back(CGramCheck::checkSemicolon(lineQueue));
+        lineQueue.inLine(line);
         lineQueue.outLine();
-
         this->lineCount++;
     }
 }
@@ -65,10 +64,82 @@ void CGramCheck::outLog(const char *fileName)
     {
         cout << "The file exists, and the file will be overwritten." << endl;
         outFile.close();
-    }  
+    }
     outFile.open(fileName, ios::out);
     // 输出结果
     outFile << "The file name is: " << fileName << endl;
+    outFile << endl;
     outFile << "The line count is: " << this->lineCount << endl;
+    outFile << endl;
+    outFile << "The semicolon result is: " << endl;
+
+    bool semicolonTotalFlag = false;
+    for (auto &&i : this->semicolonResult)
+    {
+        if (i == 1)
+        {
+            outFile << "Line " << this->lineCount << ": "
+                    << "Missing semicolon." << endl;
+            semicolonTotalFlag = true;
+        }
+        else if (i == -1)
+        {
+            outFile << "Line " << this->lineCount << ": "
+                    << "Extra semicolon." << endl;
+            semicolonTotalFlag = true;
+        }
+    }
+    if (semicolonTotalFlag == false)
+    {
+        outFile << "All lines: "
+                << "OK." << endl;
+    }
+
     outFile.close();
+}
+
+/**
+ * @description: 检查某一行的分号情况
+ * @param {CQueue} line
+ * @return {int} -1:多余分号 0:OK 1:缺少分号
+ */
+int CGramCheck::checkSemicolon(CQueue &line)
+{
+    if (line.size() == 0)
+    {
+        return 0;
+    }
+
+    bool semicolonCount = false;
+    bool semicolonFlag = true;
+    string tempWord;
+    while (line.isEmpty() == false)
+    {
+        line.out(tempWord);
+        if (tempWord == "#")
+        {
+            semicolonFlag = false;
+        }
+
+        if (tempWord == "{" || tempWord == "}" || tempWord == "(" || tempWord == ")")
+        {
+            semicolonFlag = false;
+        }
+
+        if (tempWord == ";")
+        {
+            semicolonCount = true;
+        }
+    }
+
+    if (semicolonCount == true && semicolonFlag == false)
+    {
+        return -1;
+    }
+    else if (semicolonCount == false && semicolonFlag == true)
+    {
+        return 1;
+    }
+    
+    return 0;
 }
