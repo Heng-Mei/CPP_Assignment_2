@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:18:42
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-27 16:23:42
+ * @LastEditTime: 2023-10-28 20:07:15
  * @FilePath: \Assignment_2\Src\CQueue.cpp
  */
 #include "CQueue.h"
@@ -172,26 +172,9 @@ void CQueue::inLine(const string &line)
 {
     // 定义一个临时变量
     string tempWord;
-    // 遍历字符串中的每一个字符
+    /* // 遍历字符串中的每一个字符
     for (auto &&ch : line)
     {
-        /* // 如果当前字符是空格或者当前字符是最后一个字符
-        if (CQueue::isLetter(ch) == false || &ch == &line.back())
-        {
-            if (ch != ' ')
-            {
-                tempWord += ch;
-            }
-            // 调用in函数，将临时变量中的字符串传入
-            this->in(tempWord);
-            // 将临时变量清空
-            tempWord.clear();
-        }
-        // 否则，将当前字符添加到临时变量中
-        else
-        {
-            tempWord += ch;
-        } */
         if (CQueue::isLetter(ch) == false)
         {
             // 调用in函数，将临时变量中的字符串传入
@@ -214,6 +197,45 @@ void CQueue::inLine(const string &line)
                 tempWord.clear();
             }
         }
+    } */
+    string::const_iterator it = line.begin();
+    while (it != line.end())
+    {
+        if (CQueue::isLetter(*it) == false)
+        {
+            // 调用in函数，将临时变量中的字符串传入
+            this->in(tempWord);
+            // 将临时变量清空
+            tempWord.clear();
+
+            if (*it == '<' || *it == '/' || *it == '*')
+            {
+                if (*(it + 1) == '<' || *(it + 1) == '*' || *(it + 1) == '/')
+                {
+                    tempWord += *it;
+                    tempWord += *(it + 1);
+                    this->in(tempWord);
+                    tempWord.clear();
+                    it++;
+                }
+            }
+            else if (*it != ' ')
+            {
+                tempWord += *it;
+                this->in(tempWord);
+                tempWord.clear();
+            }
+        }
+        else
+        {
+            tempWord += *it;
+            if (&(*it) == &line.back())
+            {
+                this->in(tempWord);
+                tempWord.clear();
+            }
+        }
+        it++;
     }
 }
 

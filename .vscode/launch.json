@@ -34,8 +34,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "b:/C++/Assignments/Assignment_2/Inc",
-      "program": "b:/C++/Assignments/Assignment_2/Inc/build/Debug/outDebug",
+      "cwd": "b:/C++/Assignments/Assignment_2",
+      "program": "b:/C++/Assignments/Assignment_2/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

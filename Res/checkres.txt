@@ -1,6 +1,6 @@
 The file name is: ./Res/checkres.txt
 
-The line count is: 7
+The line count is: 9
 
 The semicolon result is: 
-All lines: OK.
+Line 9: Missing semicolon.
