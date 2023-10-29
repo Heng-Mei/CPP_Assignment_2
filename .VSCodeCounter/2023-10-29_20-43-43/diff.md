@@ -1,25 +1,19 @@
 # Diff Summary
 
-Date : 2023-10-29 16:38:23
+Date : 2023-10-29 20:43:43
 
 Directory b:\\C++\\Assignments\\Assignment_2
 
-Total : 4 files,  102 codes, 31 comments, 8 blanks, all 141 lines
+Total : 0 files,  0 codes, 0 comments, 0 blanks, all 0 lines
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| C++ | 4 | 102 | 31 | 8 | 141 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 4 | 102 | 31 | 8 | 141 |
-| . (Files) | 1 | 0 | 6 | 0 | 6 |
-| Inc | 1 | 4 | 0 | 0 | 4 |
-| Res | 1 | 2 | 0 | 1 | 3 |
-| Src | 1 | 96 | 25 | 7 | 128 |
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)

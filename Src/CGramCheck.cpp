@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-29 16:37:09
+ * @LastEditTime: 2023-10-29 20:41:28
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -50,6 +50,7 @@ void CGramCheck::checkGram(void)
         this->checkPair(lineQueue, "/*", "*/");
         this->lineCount++;
     }
+    cout << "pause" << endl;
 }
 
 /**
@@ -228,54 +229,49 @@ int CGramCheck::countWord(CQueue line, const string &word)
 void CGramCheck::checkPair(CQueue line, const string &left, const string &right)
 {
     // FIXME 单双引号和注释识别不出
-    
-    // 定义一个结果数组
-    vector<int> pairResult;
+
     // 定义一个计数器
     int leftCount = CGramCheck::countWord(line, left);
     int rightCount = CGramCheck::countWord(line, right);
-    // 将计数器放入结果数组
-    pairResult.push_back(leftCount);
-    pairResult.push_back(rightCount);
 
     // 判断左右括号是否匹配
     if (left == "(" && right == ")")
     {
         // 将计数器放入结果数组
-        this->parenthesesResult[1] += pairResult[0];
-        this->parenthesesResult[2] += pairResult[1];
+        this->parenthesesResult[1] += leftCount;
+        this->parenthesesResult[2] += rightCount;
         // 判断左右括号是否匹配
         parenthesesResult[0] = parenthesesResult[1] == parenthesesResult[2] ? 0 : 1;
     }
     else if (left == "{" && right == "}")
     {
         // 将计数器放入结果数组
-        this->braceResult[1] += pairResult[0];
-        this->braceResult[2] += pairResult[1];
+        this->braceResult[1] += leftCount;
+        this->braceResult[2] += rightCount;
         // 判断左右括号是否匹配
         braceResult[0] = braceResult[1] == braceResult[2] ? 0 : 1;
     }
     else if (left == "'" && right == "'")
     {
         // 将计数器放入结果数组
-        this->quotatesResult[1] += pairResult[0];
-        this->quotatesResult[2] += pairResult[1];
-        // 判断左右引号是否匹配
-        quotatesResult[0] = quotatesResult[1] == quotatesResult[2] ? 0 : 1;
+        this->quotatesResult[1] += leftCount;
+        this->quotatesResult[2] += rightCount;
+        // 判断单引号是否偶数
+        quotatesResult[0] = quotatesResult[1] % 2 == 0 ? 0 : 1;
     }
     else if (left == "\"" && right == "\"")
     {
         // 将计数器放入结果数组
-        this->doubleQuotesResult[1] += pairResult[0];
-        this->doubleQuotesResult[2] += pairResult[1];
-        // 判断左右引号是否匹配
-        doubleQuotesResult[0] = doubleQuotesResult[1] == doubleQuotesResult[2] ? 0 : 1;
+        this->doubleQuotesResult[1] += leftCount;
+        this->doubleQuotesResult[2] += rightCount;
+        // 判断双引号是否偶数
+        doubleQuotesResult[0] = doubleQuotesResult[1] % 2 == 0 ? 0 : 1;
     }
     else if (left == "/*" && right == "*/")
     {
         // 将计数器放入结果数组
-        this->commentResult[1] += pairResult[0];
-        this->commentResult[2] += pairResult[1];
+        this->commentResult[1] += leftCount;
+        this->commentResult[2] += rightCount;
         // 判断左右注释是否匹配
         commentResult[0] = commentResult[1] == commentResult[2] ? 0 : 1;
     }
@@ -337,7 +333,7 @@ void CGramCheck::outPair(ofstream &outFile, const string &left, const string &ri
         else
         {
             outFile << "There are " << this->quotatesResult[1] << " ''' "
-                    << "and " << this->quotatesResult[2] << " ''' " << endl;
+                    << ", and the num isn't even" << endl;
         }
     }
     // 判断左右字符是否为双引号
@@ -352,7 +348,7 @@ void CGramCheck::outPair(ofstream &outFile, const string &left, const string &ri
         else
         {
             outFile << "There are " << this->doubleQuotesResult[1] << " '\"' "
-                    << "and " << this->doubleQuotesResult[2] << " '\"' " << endl;
+                    << ", and the num isn't even" << endl;
         }
     }
     // 判断左右字符是否为注释

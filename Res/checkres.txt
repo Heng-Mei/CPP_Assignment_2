@@ -10,13 +10,13 @@ Line 5: Missing semicolon.
 Line 8: Extra semicolon.
 
 The quotates pair result is: 
-OK
+There are 1 ''' , and the num isn't even
 
 The double quotes pair result is: 
-OK
+There are 3 '"' , and the num isn't even
 
 The comment pair result is: 
-OK
+There are 1 '/*' and 0 '*/' 
 
 The parentheses pair result is: 
 There are 2 '(' and 1 ')' 
