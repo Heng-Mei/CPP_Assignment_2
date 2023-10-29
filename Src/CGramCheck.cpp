@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-28 21:30:51
+ * @LastEditTime: 2023-10-29 16:37:09
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -46,6 +46,7 @@ void CGramCheck::checkGram(void)
         this->checkPair(lineQueue, "{", "}");
         this->checkPair(lineQueue, "(", ")");
         this->checkPair(lineQueue, "'", "'");
+        this->checkPair(lineQueue, "\"", "\"");
         this->checkPair(lineQueue, "/*", "*/");
         this->lineCount++;
     }
@@ -78,8 +79,9 @@ void CGramCheck::outLog(const char *fileName)
     outFile << "The line count is: " << this->lineCount << endl;
     outFile << endl;
 
-    // TODO 写入配对结果
-    
+    // 写入花括号配对结果
+    this->outPair(outFile, "{", "}");
+
     // 写入semicolon结果
     outFile << "The semicolon result is: " << endl;
     // 初始化semicolonTotalFlag为false
@@ -108,6 +110,19 @@ void CGramCheck::outLog(const char *fileName)
         outFile << "All lines: "
                 << "OK." << endl;
     }
+    outFile << endl;
+
+    // 写入单引号配对结果
+    this->outPair(outFile, "'", "'");
+
+    // 写入双引号配对结果
+    this->outPair(outFile, "\"", "\"");
+
+    // 写入注释块配对结果
+    this->outPair(outFile, "/*", "*/");
+
+    // 写入圆括号配对结果
+    this->outPair(outFile, "(", ")");
 
     // 关闭文件
     outFile.close();
@@ -145,6 +160,11 @@ int CGramCheck::checkSemicolon(CQueue line)
 
         // 如果字符串是{、}、(、)，则将semicolonFlag设置为false
         if (tempWord == "{" || tempWord == "}" || tempWord == "(" || tempWord == ")")
+        {
+            semicolonFlag = false;
+        }
+
+        if (tempWord == "/*" || tempWord == "*/")
         {
             semicolonFlag = false;
         }
@@ -207,6 +227,8 @@ int CGramCheck::countWord(CQueue line, const string &word)
  */
 void CGramCheck::checkPair(CQueue line, const string &left, const string &right)
 {
+    // FIXME 单双引号和注释识别不出
+    
     // 定义一个结果数组
     vector<int> pairResult;
     // 定义一个计数器
@@ -236,10 +258,18 @@ void CGramCheck::checkPair(CQueue line, const string &left, const string &right)
     else if (left == "'" && right == "'")
     {
         // 将计数器放入结果数组
-        this->quotationResult[1] += pairResult[0];
-        this->quotationResult[2] += pairResult[1];
+        this->quotatesResult[1] += pairResult[0];
+        this->quotatesResult[2] += pairResult[1];
         // 判断左右引号是否匹配
-        quotationResult[0] = quotationResult[1] == quotationResult[2] ? 0 : 1;
+        quotatesResult[0] = quotatesResult[1] == quotatesResult[2] ? 0 : 1;
+    }
+    else if (left == "\"" && right == "\"")
+    {
+        // 将计数器放入结果数组
+        this->doubleQuotesResult[1] += pairResult[0];
+        this->doubleQuotesResult[2] += pairResult[1];
+        // 判断左右引号是否匹配
+        doubleQuotesResult[0] = doubleQuotesResult[1] == doubleQuotesResult[2] ? 0 : 1;
     }
     else if (left == "/*" && right == "*/")
     {
@@ -249,4 +279,102 @@ void CGramCheck::checkPair(CQueue line, const string &left, const string &right)
         // 判断左右注释是否匹配
         commentResult[0] = commentResult[1] == commentResult[2] ? 0 : 1;
     }
+    else
+    {
+        cerr << "Unknown character pair: " << left << " " << right << endl;
+        exit(1);
+    }
+}
+
+/**
+ * @description: 输出某个符号的配对信息
+ * @param {ofstream} &outFile 输出文件
+ * @param {string} &left { (
+ * @param {string} &right } )
+ * @return {void}
+ */
+void CGramCheck::outPair(ofstream &outFile, const string &left, const string &right) const
+{
+    // 判断左右字符是否为括号
+    if (left == "(" && right == ")")
+    {
+        outFile << "The parentheses pair result is: " << endl;
+        // 判断括号是否匹配
+        if (this->parenthesesResult[0] == 0)
+        {
+            outFile << "OK" << endl;
+        }
+        else
+        {
+            outFile << "There are " << this->parenthesesResult[1] << " '(' "
+                    << "and " << this->parenthesesResult[2] << " ')' " << endl;
+        }
+    }
+    // 判断左右字符是否为大括号
+    else if (left == "{" && right == "}")
+    {
+        outFile << "The brace pair result is: " << endl;
+        // 判断大括号是否匹配
+        if (this->braceResult[0] == 0)
+        {
+            outFile << "OK" << endl;
+        }
+        else
+        {
+            outFile << "There are " << this->braceResult[1] << " '{' "
+                    << "and " << this->braceResult[2] << " '}' " << endl;
+        }
+    }
+    // 判断左右字符是否为单引号
+    else if (left == "'" && right == "'")
+    {
+        outFile << "The quotates pair result is: " << endl;
+        // 判断单引号是否匹配
+        if (this->quotatesResult[0] == 0)
+        {
+            outFile << "OK" << endl;
+        }
+        else
+        {
+            outFile << "There are " << this->quotatesResult[1] << " ''' "
+                    << "and " << this->quotatesResult[2] << " ''' " << endl;
+        }
+    }
+    // 判断左右字符是否为双引号
+    else if (left == "\"" && right == "\"")
+    {
+        outFile << "The double quotes pair result is: " << endl;
+        // 判断双引号是否匹配
+        if (this->doubleQuotesResult[0] == 0)
+        {
+            outFile << "OK" << endl;
+        }
+        else
+        {
+            outFile << "There are " << this->doubleQuotesResult[1] << " '\"' "
+                    << "and " << this->doubleQuotesResult[2] << " '\"' " << endl;
+        }
+    }
+    // 判断左右字符是否为注释
+    else if (left == "/*" && right == "*/")
+    {
+        outFile << "The comment pair result is: " << endl;
+        // 判断注释是否匹配
+        if (this->commentResult[0] == 0)
+        {
+            outFile << "OK" << endl;
+        }
+        else
+        {
+            outFile << "There are " << this->commentResult[1] << " '/*' "
+                    << "and " << this->commentResult[2] << " '*/' " << endl;
+        }
+    }
+    // 判断左右字符是否为未知字符
+    else
+    {
+        cerr << "Unknown character pair: " << left << " " << right << endl;
+        exit(1);
+    }
+    outFile << endl;
 }

@@ -1,6 +1,23 @@
 The file name is: ./Res/checkres.txt
 
-The line count is: 9
+The line count is: 12
+
+The brace pair result is: 
+There are 1 '{' and 0 '}' 
 
 The semicolon result is: 
-Line 9: Missing semicolon.
+Line 5: Missing semicolon.
+Line 8: Extra semicolon.
+
+The quotates pair result is: 
+OK
+
+The double quotes pair result is: 
+OK
+
+The comment pair result is: 
+OK
+
+The parentheses pair result is: 
+There are 2 '(' and 1 ')' 
+
