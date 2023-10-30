@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:13:25
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-29 16:31:10
+ * @LastEditTime: 2023-10-30 11:02:55
  * @FilePath: \Assignment_2\Inc\CGramCheck.h
  */
 #ifndef CGRAMCHECK_H
@@ -28,6 +28,12 @@ private:
     vector<int> doubleQuotesResult; // ""
     fstream file;
 
+private:
+    static int checkSemicolon(CQueue line);
+    static int countWord(CQueue line, const string &word);
+    void checkPair(CQueue line, const string &left, const string &right);
+    void outPair(ofstream &outFile, const string &left, const string &right) const;
+
 public:
     CGramCheck(const char *fileName);
     CGramCheck();
@@ -35,10 +41,7 @@ public:
     bool openCPP(const char *fileName);
     void checkGram(void);
     void outLog(const char *fileName);
-    static int checkSemicolon(CQueue line);
-    static int countWord(CQueue line, const string &word);
-    void checkPair(CQueue line, const string &left, const string &right);
-    void outPair(ofstream &outFile, const string &left, const string &right) const;
+    static void outPrintFile(const char *fileName);
 };
 
 inline CGramCheck::CGramCheck(const char *fileName) : lineCount(0)

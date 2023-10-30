@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-29 20:41:28
+ * @LastEditTime: 2023-10-30 11:26:00
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -38,8 +38,6 @@ void CGramCheck::checkGram(void)
         // // 读取一行
         string line;
         getline(this->file, line);
-        cout << line << endl;
-        // TODO 一行入队并开始语法检查
         CQueue lineQueue;
         lineQueue.inLine(line);
         this->semicolonResult.push_back(CGramCheck::checkSemicolon(lineQueue));
@@ -50,7 +48,6 @@ void CGramCheck::checkGram(void)
         this->checkPair(lineQueue, "/*", "*/");
         this->lineCount++;
     }
-    cout << "pause" << endl;
 }
 
 /**
@@ -61,7 +58,7 @@ void CGramCheck::checkGram(void)
 void CGramCheck::outLog(const char *fileName)
 {
     // 打印开始输出结果的信息
-    cout << "Start to output the result." << endl;
+    cout << "Starting to write results." << endl;
     // 打开文件
     ofstream outFile;
     outFile.open(fileName, ios::in);
@@ -228,8 +225,6 @@ int CGramCheck::countWord(CQueue line, const string &word)
  */
 void CGramCheck::checkPair(CQueue line, const string &left, const string &right)
 {
-    // FIXME 单双引号和注释识别不出
-
     // 定义一个计数器
     int leftCount = CGramCheck::countWord(line, left);
     int rightCount = CGramCheck::countWord(line, right);
@@ -373,4 +368,36 @@ void CGramCheck::outPair(ofstream &outFile, const string &left, const string &ri
         exit(1);
     }
     outFile << endl;
+}
+
+/**
+ * @description: 读一个文件逐行打印
+ * @param {char} *fileName
+ * @return {void}
+ */
+void CGramCheck::outPrintFile(const char *fileName)
+{
+    // 打开文件
+    ifstream inFile;
+    inFile.open(fileName);
+    // 如果文件打开失败，则输出错误信息并退出
+    if (!inFile.is_open())
+    {
+        cerr << "Can't open file: " << fileName << endl;
+        exit(1);
+    }
+
+    // 读取文件中的每一行
+    string line;
+    while (inFile.eof() == false)
+    {
+        // 读取一行
+        getline(inFile, line);
+        // 输出到屏幕
+        cout << line << endl;
+        // 清空line
+        line.clear();
+    }
+    // 关闭文件
+    inFile.close();
 }
