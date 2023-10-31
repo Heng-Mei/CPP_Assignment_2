@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:11:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-27 20:16:02
+ * @LastEditTime: 2023-10-31 16:35:59
  * @FilePath: \Assignment_2\Inc\CQueue.h
  */
 #ifndef CQUEUE_H
@@ -20,6 +20,7 @@ private:
 public:
     CQueue(int nInitSize, int nIncStep); // 初始大小，队列增长步长；
     CQueue(const CQueue &cq);            // 拷贝构造函数
+    CQueue &operator=(const CQueue &cq); // 运算符重载
     ~CQueue();                           // 释放内存
     bool in(const string &ele);          // 单词如队，若当前存储区不足，自动增长（步长为m_nIncStep），入队成功返回true。
     bool out(string &ele);               // 队头单词出队，若队列空，返回false。
@@ -50,6 +51,18 @@ inline CQueue::CQueue(const CQueue &cq)
     {
         this->m_pBuf[i] = cq.m_pBuf[i];
     }
+}
+
+inline CQueue &CQueue::operator=(const CQueue &cq)
+{
+    this->m_nIncStep = cq.m_nIncStep;
+    this->m_nSize = cq.m_nSize;
+    this->m_pBuf = new string[this->m_nSize];
+    for (int i = 0; i < this->m_nSize; i++)
+    {
+        this->m_pBuf[i] = cq.m_pBuf[i];
+    }
+    return *this;
 }
 
 inline CQueue::~CQueue()

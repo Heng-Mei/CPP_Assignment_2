@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-30 11:26:00
+ * @LastEditTime: 2023-10-30 11:29:01
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -38,14 +38,18 @@ void CGramCheck::checkGram(void)
         // // 读取一行
         string line;
         getline(this->file, line);
+        // // 创建一个行队列
         CQueue lineQueue;
         lineQueue.inLine(line);
+        // // 检查分号
         this->semicolonResult.push_back(CGramCheck::checkSemicolon(lineQueue));
+        // // 检查成对符号
         this->checkPair(lineQueue, "{", "}");
         this->checkPair(lineQueue, "(", ")");
         this->checkPair(lineQueue, "'", "'");
         this->checkPair(lineQueue, "\"", "\"");
         this->checkPair(lineQueue, "/*", "*/");
+        // // 行计数器
         this->lineCount++;
     }
 }
