@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:11:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-31 16:35:59
+ * @LastEditTime: 2023-11-01 20:21:49
  * @FilePath: \Assignment_2\Inc\CQueue.h
  */
 #ifndef CQUEUE_H
@@ -55,12 +55,16 @@ inline CQueue::CQueue(const CQueue &cq)
 
 inline CQueue &CQueue::operator=(const CQueue &cq)
 {
-    this->m_nIncStep = cq.m_nIncStep;
-    this->m_nSize = cq.m_nSize;
-    this->m_pBuf = new string[this->m_nSize];
-    for (int i = 0; i < this->m_nSize; i++)
+    if (this != &cq)
     {
-        this->m_pBuf[i] = cq.m_pBuf[i];
+        this->m_nIncStep = cq.m_nIncStep;
+        this->m_nSize = cq.m_nSize;
+        delete[] this->m_pBuf;
+        this->m_pBuf = new string[this->m_nSize];
+        for (int i = 0; i < this->m_nSize; i++)
+        {
+            this->m_pBuf[i] = cq.m_pBuf[i];
+        }
     }
     return *this;
 }
