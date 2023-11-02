@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-11-02 16:28:06
+ * @LastEditTime: 2023-11-02 20:09:43
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -201,13 +201,28 @@ int CGramCheck::checkSemicolon(map<string, int> &times)
     }
 
     // 检查是否有括号
-    if (times["{"] >= 1 || times["}"] >= 1 || times["("] >= 1 || times[")"] >= 1)
+    if (times["{"] >= 1 || times["}"] >= 1)
     {
         semicolonFlag = false;
     }
 
-    // 检查是否有多行注释
-    if (times["/*"] >= 1 || times["*/"] >= 1)
+    if (times["main"] == 1)
+    {
+        semicolonFlag = false;
+    }
+
+    if (times["if"] == 1)
+    {
+        semicolonFlag = false;
+    }
+
+    if (times["while"] == 1)
+    {
+        semicolonFlag = false;
+    }
+    
+
+    if (times["//"] == 1)
     {
         semicolonFlag = false;
     }
@@ -258,8 +273,6 @@ int CGramCheck::checkSemicolon(map<string, int> &times)
 //     return count;
 // }
 
-
-// TODO 优化
 /**
  * @description: 检查某个字符的配对
  * @param {CQueue} line
@@ -269,59 +282,67 @@ int CGramCheck::checkSemicolon(map<string, int> &times)
  */
 void CGramCheck::checkPair(map<string, int> &times, const string &left, const string &right)
 {
-    // 定义一个计数器
-    int leftCount = times[left];
-    int rightCount = times[right];
+    // // 定义一个计数器
+    // int leftCount = times[left];
+    // int rightCount = times[right];
 
-    // 判断左右括号是否匹配
-    if (left == "(" && right == ")")
+    // // 判断左右括号是否匹配
+    // if (left == "(" && right == ")")
+    // {
+    //     // 将计数器放入结果数组
+    //     this->parenthesesResult[1] += leftCount;
+    //     this->parenthesesResult[2] += rightCount;
+    //     // 判断左右括号是否匹配
+    //     parenthesesResult[0] = parenthesesResult[1] == parenthesesResult[2] ? 0 : 1;
+    // }
+    // else if (left == "{" && right == "}")
+    // {
+    //     // 将计数器放入结果数组
+    //     this->braceResult[1] += leftCount;
+    //     this->braceResult[2] += rightCount;
+    //     // 判断左右括号是否匹配
+    //     braceResult[0] = braceResult[1] == braceResult[2] ? 0 : 1;
+    // }
+    // else if (left == "'" && right == "'")
+    // {
+    //     // 将计数器放入结果数组
+    //     this->quotatesResult[1] += leftCount;
+    //     this->quotatesResult[2] += rightCount;
+    //     // 判断单引号是否偶数
+    //     quotatesResult[0] = quotatesResult[1] % 2 == 0 ? 0 : 1;
+    // }
+    // else if (left == "\"" && right == "\"")
+    // {
+    //     // 将计数器放入结果数组
+    //     this->doubleQuotesResult[1] += leftCount;
+    //     this->doubleQuotesResult[2] += rightCount;
+    //     // 判断双引号是否偶数
+    //     doubleQuotesResult[0] = doubleQuotesResult[1] % 2 == 0 ? 0 : 1;
+    // }
+    // else if (left == "/*" && right == "*/")
+    // {
+    //     // 将计数器放入结果数组
+    //     this->commentResult[1] += leftCount;
+    //     this->commentResult[2] += rightCount;
+    //     // 判断左右注释是否匹配
+    //     commentResult[0] = commentResult[1] == commentResult[2] ? 0 : 1;
+    // }
+    // else
+    // {
+    //     cerr << "Unknown character pair: " << left << " " << right << endl;
+    //     exit(1);
+    // }
+    if (left != right)
     {
-        // 将计数器放入结果数组
-        this->parenthesesResult[1] += leftCount;
-        this->parenthesesResult[2] += rightCount;
-        // 判断左右括号是否匹配
-        parenthesesResult[0] = parenthesesResult[1] == parenthesesResult[2] ? 0 : 1;
-    }
-    else if (left == "{" && right == "}")
-    {
-        // 将计数器放入结果数组
-        this->braceResult[1] += leftCount;
-        this->braceResult[2] += rightCount;
-        // 判断左右括号是否匹配
-        braceResult[0] = braceResult[1] == braceResult[2] ? 0 : 1;
-    }
-    else if (left == "'" && right == "'")
-    {
-        // 将计数器放入结果数组
-        this->quotatesResult[1] += leftCount;
-        this->quotatesResult[2] += rightCount;
-        // 判断单引号是否偶数
-        quotatesResult[0] = quotatesResult[1] % 2 == 0 ? 0 : 1;
-    }
-    else if (left == "\"" && right == "\"")
-    {
-        // 将计数器放入结果数组
-        this->doubleQuotesResult[1] += leftCount;
-        this->doubleQuotesResult[2] += rightCount;
-        // 判断双引号是否偶数
-        doubleQuotesResult[0] = doubleQuotesResult[1] % 2 == 0 ? 0 : 1;
-    }
-    else if (left == "/*" && right == "*/")
-    {
-        // 将计数器放入结果数组
-        this->commentResult[1] += leftCount;
-        this->commentResult[2] += rightCount;
-        // 判断左右注释是否匹配
-        commentResult[0] = commentResult[1] == commentResult[2] ? 0 : 1;
+        this->pairResult[left] += times[left];
+        this->pairResult[right] += times[right];
     }
     else
     {
-        cerr << "Unknown character pair: " << left << " " << right << endl;
-        exit(1);
+        this->pairResult[left] += times[left];
     }
 }
 
-// TODO 优化
 /**
  * @description: 输出某个符号的配对信息
  * @param {ofstream} &outFile 输出文件
@@ -329,88 +350,115 @@ void CGramCheck::checkPair(map<string, int> &times, const string &left, const st
  * @param {string} &right } )
  * @return {void}
  */
-void CGramCheck::outPair(ofstream &outFile, const string &left, const string &right) const
+void CGramCheck::outPair(ofstream &outFile, const string &left, const string &right)
 {
-    // 判断左右字符是否为括号
-    if (left == "(" && right == ")")
+    // // 判断左右字符是否为括号
+    // if (left == "(" && right == ")")
+    // {
+    //     outFile << "The parentheses pair result is: " << endl;
+    //     // 判断括号是否匹配
+    //     if (this->parenthesesResult[0] == 0)
+    //     {
+    //         outFile << "OK" << endl;
+    //     }
+    //     else
+    //     {
+    //         outFile << "There are " << this->parenthesesResult[1] << " '(' "
+    //                 << "and " << this->parenthesesResult[2] << " ')' " << endl;
+    //     }
+    // }
+    // // 判断左右字符是否为大括号
+    // else if (left == "{" && right == "}")
+    // {
+    //     outFile << "The brace pair result is: " << endl;
+    //     // 判断大括号是否匹配
+    //     if (this->braceResult[0] == 0)
+    //     {
+    //         outFile << "OK" << endl;
+    //     }
+    //     else
+    //     {
+    //         outFile << "There are " << this->braceResult[1] << " '{' "
+    //                 << "and " << this->braceResult[2] << " '}' " << endl;
+    //     }
+    // }
+    // // 判断左右字符是否为单引号
+    // else if (left == "'" && right == "'")
+    // {
+    //     outFile << "The quotates pair result is: " << endl;
+    //     // 判断单引号是否匹配
+    //     if (this->quotatesResult[0] == 0)
+    //     {
+    //         outFile << "OK" << endl;
+    //     }
+    //     else
+    //     {
+    //         outFile << "There are " << this->quotatesResult[1] << " ''' "
+    //                 << ", and the num isn't even" << endl;
+    //     }
+    // }
+    // // 判断左右字符是否为双引号
+    // else if (left == "\"" && right == "\"")
+    // {
+    //     outFile << "The double quotes pair result is: " << endl;
+    //     // 判断双引号是否匹配
+    //     if (this->doubleQuotesResult[0] == 0)
+    //     {
+    //         outFile << "OK" << endl;
+    //     }
+    //     else
+    //     {
+    //         outFile << "There are " << this->doubleQuotesResult[1] << " '\"' "
+    //                 << ", and the num isn't even" << endl;
+    //     }
+    // }
+    // // 判断左右字符是否为注释
+    // else if (left == "/*" && right == "*/")
+    // {
+    //     outFile << "The comment pair result is: " << endl;
+    //     // 判断注释是否匹配
+    //     if (this->commentResult[0] == 0)
+    //     {
+    //         outFile << "OK" << endl;
+    //     }
+    //     else
+    //     {
+    //         outFile << "There are " << this->commentResult[1] << " '/*' "
+    //                 << "and " << this->commentResult[2] << " '*/' " << endl;
+    //     }
+    // }
+    // // 判断左右字符是否为未知字符
+    // else
+    // {
+    //     cerr << "Unknown character pair: " << left << " " << right << endl;
+    //     exit(1);
+    // }
+
+    outFile << "The " + left + " " + right + " pair result is: " << endl;
+    // 判断是否是 ' ' " "
+    if (left == right)
     {
-        outFile << "The parentheses pair result is: " << endl;
-        // 判断括号是否匹配
-        if (this->parenthesesResult[0] == 0)
+        if (this->pairResult[left] % 2 == 0)
         {
             outFile << "OK" << endl;
         }
         else
         {
-            outFile << "There are " << this->parenthesesResult[1] << " '(' "
-                    << "and " << this->parenthesesResult[2] << " ')' " << endl;
-        }
-    }
-    // 判断左右字符是否为大括号
-    else if (left == "{" && right == "}")
-    {
-        outFile << "The brace pair result is: " << endl;
-        // 判断大括号是否匹配
-        if (this->braceResult[0] == 0)
-        {
-            outFile << "OK" << endl;
-        }
-        else
-        {
-            outFile << "There are " << this->braceResult[1] << " '{' "
-                    << "and " << this->braceResult[2] << " '}' " << endl;
-        }
-    }
-    // 判断左右字符是否为单引号
-    else if (left == "'" && right == "'")
-    {
-        outFile << "The quotates pair result is: " << endl;
-        // 判断单引号是否匹配
-        if (this->quotatesResult[0] == 0)
-        {
-            outFile << "OK" << endl;
-        }
-        else
-        {
-            outFile << "There are " << this->quotatesResult[1] << " ''' "
+            outFile << "There are " << pairResult[left] << " " << left
                     << ", and the num isn't even" << endl;
         }
     }
-    // 判断左右字符是否为双引号
-    else if (left == "\"" && right == "\"")
-    {
-        outFile << "The double quotes pair result is: " << endl;
-        // 判断双引号是否匹配
-        if (this->doubleQuotesResult[0] == 0)
-        {
-            outFile << "OK" << endl;
-        }
-        else
-        {
-            outFile << "There are " << this->doubleQuotesResult[1] << " '\"' "
-                    << ", and the num isn't even" << endl;
-        }
-    }
-    // 判断左右字符是否为注释
-    else if (left == "/*" && right == "*/")
-    {
-        outFile << "The comment pair result is: " << endl;
-        // 判断注释是否匹配
-        if (this->commentResult[0] == 0)
-        {
-            outFile << "OK" << endl;
-        }
-        else
-        {
-            outFile << "There are " << this->commentResult[1] << " '/*' "
-                    << "and " << this->commentResult[2] << " '*/' " << endl;
-        }
-    }
-    // 判断左右字符是否为未知字符
     else
     {
-        cerr << "Unknown character pair: " << left << " " << right << endl;
-        exit(1);
+        if (this->pairResult[left] == this->pairResult[right])
+        {
+            outFile << "OK" << endl;
+        }
+        else
+        {
+            outFile << "There are " << this->pairResult[left] << " '" + left + "' "
+                    << "and " << this->pairResult[right] << " '" + right + "' " << endl;
+        }
     }
     outFile << endl;
 }
@@ -461,4 +509,13 @@ void CGramCheck::checkLine(CQueue &line)
     this->checkPair(times, "'", "'");
     this->checkPair(times, "\"", "\"");
     this->checkPair(times, "/*", "*/");
+}
+
+/**
+ * @description: 关闭CPP文件
+ * @return {void}
+ */
+void CGramCheck::closeCPP()
+{
+    this->file.close();
 }

@@ -2,22 +2,22 @@ The file name is: ./Res/checkres.txt
 
 The line count is: 12
 
-The brace pair result is: 
+The { } pair result is: 
 There are 1 '{' and 0 '}' 
 
 The semicolon result is: 
 Line 5: Missing semicolon.
-Line 8: Extra semicolon.
+Line 12: Missing semicolon.
 
-The quotates pair result is: 
-There are 1 ''' , and the num isn't even
+The ' ' pair result is: 
+There are 1 ', and the num isn't even
 
-The double quotes pair result is: 
-There are 3 '"' , and the num isn't even
+The " " pair result is: 
+There are 3 ", and the num isn't even
 
-The comment pair result is: 
+The /* */ pair result is: 
 There are 1 '/*' and 0 '*/' 
 
-The parentheses pair result is: 
+The ( ) pair result is: 
 There are 2 '(' and 1 ')' 
 

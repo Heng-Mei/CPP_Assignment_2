@@ -1,9 +1,3 @@
-/*
- * @Date: 2023-10-24 21:07:00
- * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-28 20:25:07
- * @FilePath: \Assignment_2\main.cpp
- */
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -28,7 +22,6 @@ int main()
 
     //(0)读入路径和输出路径设置
     const char *inputPath = "./Res/tobecheck.cpp";
-    // const char *inputPath = "./Res/OK.cpp";
     const char *outputPath = "./Res/checkres.txt";
 
     //(1)定义CGramCheck对象
@@ -54,6 +47,5 @@ int main()
     CGramCheck::outPrintFile(outputPath);
 
     //(5)关闭文件
-    gc.closeCPP();
     return 0;
 }
