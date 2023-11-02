@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-30 11:29:01
+ * @LastEditTime: 2023-11-02 16:28:06
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -35,21 +35,15 @@ void CGramCheck::checkGram(void)
     // 循环检查文件中的每一行
     while (this->file.eof() == false)
     {
-        // // 读取一行
+        // 读取一行
         string line;
         getline(this->file, line);
-        // // 创建一个行队列
-        CQueue lineQueue;
-        lineQueue.inLine(line);
-        // // 检查分号
-        this->semicolonResult.push_back(CGramCheck::checkSemicolon(lineQueue));
-        // // 检查成对符号
-        this->checkPair(lineQueue, "{", "}");
-        this->checkPair(lineQueue, "(", ")");
-        this->checkPair(lineQueue, "'", "'");
-        this->checkPair(lineQueue, "\"", "\"");
-        this->checkPair(lineQueue, "/*", "*/");
-        // // 行计数器
+        // 创建一个行队列
+        CQueue lineQueue = line;
+
+        this->checkLine(lineQueue);
+
+        // 行计数器
         this->lineCount++;
     }
 }
@@ -132,94 +126,140 @@ void CGramCheck::outLog(const char *fileName)
 
 /**
  * @description: 检查某一行的分号情况
- * @param {CQueue} line
+ * @param {map<string, int>} &times
  * @return {int} -1:多余分号 0:OK 1:缺少分号
  */
-int CGramCheck::checkSemicolon(CQueue line)
+int CGramCheck::checkSemicolon(map<string, int> &times)
 {
-    // 如果队列为空，则返回0
-    if (line.size() == 0)
+    // // 如果队列为空，则返回0
+    // if (line.size() == 0)
+    // {
+    //     return 0;
+    // }
+
+    // // 定义一个布尔变量，用来判断是否有分号
+    // bool semicolonCount = false;
+    // // 定义一个布尔变量，用来判断是否该有分号
+    // bool semicolonFlag = true;
+    // // 定义一个字符串变量，用来存储临时字符串
+    // string tempWord;
+    // // 循环遍历队列
+    // while (line.isEmpty() == false)
+    // {
+    //     // 从队列中取出一个字符串
+    //     line.out(tempWord);
+    //     // 如果字符串是#，则将semicolonFlag设置为false
+    //     if (tempWord == "#")
+    //     {
+    //         semicolonFlag = false;
+    //     }
+
+    //     // 如果字符串是{、}、(、)，则将semicolonFlag设置为false
+    //     if (tempWord == "{" || tempWord == "}" || tempWord == "(" || tempWord == ")")
+    //     {
+    //         semicolonFlag = false;
+    //     }
+
+    //     if (tempWord == "/*" || tempWord == "*/")
+    //     {
+    //         semicolonFlag = false;
+    //     }
+
+    //     // 如果字符串是;，则将semicolonCount设置为true
+    //     if (tempWord == ";")
+    //     {
+    //         semicolonCount = true;
+    //     }
+    // }
+
+    // // 如果semicolonCount为true，且semicolonFlag为false，则返回-1
+    // if (semicolonCount == true && semicolonFlag == false)
+    // {
+    //     return -1;
+    // }
+    // // 如果semicolonCount为false，且semicolonFlag为true，则返回1
+    // else if (semicolonCount == false && semicolonFlag == true)
+    // {
+    //     return 1;
+    // }
+
+    // // 否则，返回0
+    // return 0;
+
+    if (times.empty() == true)
     {
         return 0;
     }
 
-    // 定义一个布尔变量，用来判断是否有分号
-    bool semicolonCount = false;
-    // 定义一个布尔变量，用来判断是否该有分号
+    int semicolonCount = times[";"];
     bool semicolonFlag = true;
-    // 定义一个字符串变量，用来存储临时字符串
-    string tempWord;
-    // 循环遍历队列
-    while (line.isEmpty() == false)
+
+    // 检查是否有#
+    if (times["#"] >= 1)
     {
-        // 从队列中取出一个字符串
-        line.out(tempWord);
-        // 如果字符串是#，则将semicolonFlag设置为false
-        if (tempWord == "#")
-        {
-            semicolonFlag = false;
-        }
-
-        // 如果字符串是{、}、(、)，则将semicolonFlag设置为false
-        if (tempWord == "{" || tempWord == "}" || tempWord == "(" || tempWord == ")")
-        {
-            semicolonFlag = false;
-        }
-
-        if (tempWord == "/*" || tempWord == "*/")
-        {
-            semicolonFlag = false;
-        }
-
-        // 如果字符串是;，则将semicolonCount设置为true
-        if (tempWord == ";")
-        {
-            semicolonCount = true;
-        }
+        semicolonFlag = false;
     }
 
-    // 如果semicolonCount为true，且semicolonFlag为false，则返回-1
-    if (semicolonCount == true && semicolonFlag == false)
+    // 检查是否有括号
+    if (times["{"] >= 1 || times["}"] >= 1 || times["("] >= 1 || times[")"] >= 1)
+    {
+        semicolonFlag = false;
+    }
+
+    // 检查是否有多行注释
+    if (times["/*"] >= 1 || times["*/"] >= 1)
+    {
+        semicolonFlag = false;
+    }
+
+    // 分号数量大于1
+    if (semicolonCount > 1)
     {
         return -1;
     }
-    // 如果semicolonCount为false，且semicolonFlag为true，则返回1
-    else if (semicolonCount == false && semicolonFlag == true)
+    // 不应有分号多分号
+    else if (semicolonCount == 1 && semicolonFlag == false)
+    {
+        return -1;
+    }
+    // 应有分号无分号
+    else if (semicolonCount == 0 && semicolonFlag == true)
     {
         return 1;
     }
 
-    // 否则，返回0
     return 0;
 }
 
-/**
- * @description: 数一个队列中某个字符串的数量
- * @param {CQueue} line
- * @param {string} &word 待计数字符'{}'等
- * @return {int} 字符出现次数
- */
-int CGramCheck::countWord(CQueue line, const string &word)
-{
-    // 定义一个计数器
-    int count = 0;
-    // 当队列不为空时，循环执行
-    while (line.isEmpty() == false)
-    {
-        // 定义一个临时变量，用于存储出队元素
-        string tempWord;
-        // 将队列中的元素出队
-        line.out(tempWord);
-        // 如果出队元素和word相等，计数器加1
-        if (tempWord == word)
-        {
-            count++;
-        }
-    }
-    // 返回计数器
-    return count;
-}
+// /**
+//  * @description: 数一个队列中某个字符串的数量
+//  * @param {CQueue} line
+//  * @param {string} &word 待计数字符'{}'等
+//  * @return {int} 字符出现次数
+//  */
+// int CGramCheck::countWord(CQueue line, const string &word)
+// {
+//     // 定义一个计数器
+//     int count = 0;
+//     // 当队列不为空时，循环执行
+//     while (line.isEmpty() == false)
+//     {
+//         // 定义一个临时变量，用于存储出队元素
+//         string tempWord;
+//         // 将队列中的元素出队
+//         line.out(tempWord);
+//         // 如果出队元素和word相等，计数器加1
+//         if (tempWord == word)
+//         {
+//             count++;
+//         }
+//     }
+//     // 返回计数器
+//     return count;
+// }
 
+
+// TODO 优化
 /**
  * @description: 检查某个字符的配对
  * @param {CQueue} line
@@ -227,11 +267,11 @@ int CGramCheck::countWord(CQueue line, const string &word)
  * @param {string} &right } )
  * @return {void}
  */
-void CGramCheck::checkPair(CQueue line, const string &left, const string &right)
+void CGramCheck::checkPair(map<string, int> &times, const string &left, const string &right)
 {
     // 定义一个计数器
-    int leftCount = CGramCheck::countWord(line, left);
-    int rightCount = CGramCheck::countWord(line, right);
+    int leftCount = times[left];
+    int rightCount = times[right];
 
     // 判断左右括号是否匹配
     if (left == "(" && right == ")")
@@ -281,6 +321,7 @@ void CGramCheck::checkPair(CQueue line, const string &left, const string &right)
     }
 }
 
+// TODO 优化
 /**
  * @description: 输出某个符号的配对信息
  * @param {ofstream} &outFile 输出文件
@@ -404,4 +445,20 @@ void CGramCheck::outPrintFile(const char *fileName)
     }
     // 关闭文件
     inFile.close();
+}
+
+/**
+ * @description: 对一行代码进行检查
+ * @param {CQueue} &line
+ * @return {void}
+ */
+void CGramCheck::checkLine(CQueue &line)
+{
+    map<string, int> times = line.toMap();
+    this->semicolonResult.push_back(CGramCheck::checkSemicolon(times));
+    this->checkPair(times, "{", "}");
+    this->checkPair(times, "(", ")");
+    this->checkPair(times, "'", "'");
+    this->checkPair(times, "\"", "\"");
+    this->checkPair(times, "/*", "*/");
 }

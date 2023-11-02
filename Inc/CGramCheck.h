@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:13:25
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-30 11:02:55
+ * @LastEditTime: 2023-11-02 15:56:00
  * @FilePath: \Assignment_2\Inc\CGramCheck.h
  */
 #ifndef CGRAMCHECK_H
@@ -29,49 +29,33 @@ private:
     fstream file;
 
 private:
-    static int checkSemicolon(CQueue line);
-    static int countWord(CQueue line, const string &word);
-    void checkPair(CQueue line, const string &left, const string &right);
+    static int checkSemicolon(map<string, int> &times);
+    // static int countWord(CQueue line, const string &word);
+    void checkPair(map<string, int> &times, const string &left, const string &right);
     void outPair(ofstream &outFile, const string &left, const string &right) const;
+    void checkLine(CQueue &line);
 
 public:
     CGramCheck(const char *fileName);
     CGramCheck();
-    ~CGramCheck();
+    virtual ~CGramCheck();
     bool openCPP(const char *fileName);
     void checkGram(void);
     void outLog(const char *fileName);
     static void outPrintFile(const char *fileName);
 };
 
-inline CGramCheck::CGramCheck(const char *fileName) : lineCount(0)
+inline CGramCheck::CGramCheck(const char *fileName) : lineCount(0), commentResult(3, 0), braceResult(3, 0), parenthesesResult(3, 0), quotatesResult(3, 0), doubleQuotesResult(3, 0)
 {
     if (this->openCPP(fileName) == false)
     {
         cerr << "The file not be found!" << endl;
         return;
     }
-
-    for (int i = 0; i < 3; i++)
-    {
-        commentResult.push_back(0);
-        braceResult.push_back(0);
-        parenthesesResult.push_back(0);
-        quotatesResult.push_back(0);
-        doubleQuotesResult.push_back(0);
-    }
 }
 
-inline CGramCheck::CGramCheck() : lineCount(0)
+inline CGramCheck::CGramCheck() : lineCount(0), commentResult(3, 0), braceResult(3, 0), parenthesesResult(3, 0), quotatesResult(3, 0), doubleQuotesResult(3, 0)
 {
-    for (int i = 0; i < 3; i++)
-    {
-        commentResult.push_back(0);
-        braceResult.push_back(0);
-        parenthesesResult.push_back(0);
-        quotatesResult.push_back(0);
-        doubleQuotesResult.push_back(0);
-    }
 }
 
 inline CGramCheck::~CGramCheck()

@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:18:42
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-10-28 20:07:15
+ * @LastEditTime: 2023-11-02 15:47:07
  * @FilePath: \Assignment_2\Src\CQueue.cpp
  */
 #include "CQueue.h"
@@ -259,4 +259,20 @@ void CQueue::outLine(void)
 bool CQueue::isLetter(char ch)
 {
     return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
+}
+
+/**
+ * @description: 把队列出队变为map，统计队列中单词出现次数
+ * @return {map<string, int>} 返回一个map，string是word，int是times
+ */
+map<string, int> CQueue::toMap(void)
+{
+    map<string, int> result;
+    while (this->isEmpty() == false)
+    {
+        string tempWord;
+        this->out(tempWord);
+        result[tempWord]++;
+    }
+    return result;
 }
