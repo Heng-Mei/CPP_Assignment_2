@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:13:25
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-11-02 20:03:12
+ * @LastEditTime: 2023-11-03 14:26:59
  * @FilePath: \Assignment_2\Inc\CGramCheck.h
  */
 #ifndef CGRAMCHECK_H
@@ -21,6 +21,7 @@ class CGramCheck
 private:
     int lineCount;
     vector<int> semicolonResult;
+    vector<string> operatorResult;
 
     // vector<int> commentResult;      // /* */
     // vector<int> braceResult;        // {}
@@ -36,6 +37,10 @@ private:
     void checkPair(map<string, int> &times, const string &left, const string &right);
     void outPair(ofstream &outFile, const string &left, const string &right);
     void checkLine(CQueue &line);
+    static bool isWord(const string &word);
+    static bool isOperator(const string &word);
+    static bool isNum(const string &word);
+    static string checkOperator(CQueue line);
 
 public:
     CGramCheck(const char *fileName);

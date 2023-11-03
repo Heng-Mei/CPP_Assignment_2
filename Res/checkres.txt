@@ -1,13 +1,16 @@
 The file name is: ./Res/checkres.txt
 
-The line count is: 12
+The line count is: 13
 
 The { } pair result is: 
 There are 1 '{' and 0 '}' 
 
 The semicolon result is: 
 Line 5: Missing semicolon.
-Line 12: Missing semicolon.
+Line 13: Missing semicolon.
+
+The operator result is: 
+Line 6: Operator problem: /
 
 The ' ' pair result is: 
 There are 1 ', and the num isn't even

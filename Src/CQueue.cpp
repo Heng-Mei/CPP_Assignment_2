@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:18:42
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-11-02 15:47:07
+ * @LastEditTime: 2023-11-03 14:57:43
  * @FilePath: \Assignment_2\Src\CQueue.cpp
  */
 #include "CQueue.h"
@@ -198,8 +198,8 @@ void CQueue::inLine(const string &line)
             }
         }
     } */
-    string::const_iterator it = line.begin();
-    while (it != line.end())
+
+    for (string::const_iterator it = line.begin(); it != line.end(); it++)
     {
         if (CQueue::isLetter(*it) == false)
         {
@@ -218,6 +218,10 @@ void CQueue::inLine(const string &line)
                     tempWord.clear();
                     it++;
                 }
+                else
+                {
+                    tempWord += *it;
+                }
             }
             else if (*it != ' ')
             {
@@ -235,7 +239,6 @@ void CQueue::inLine(const string &line)
                 tempWord.clear();
             }
         }
-        it++;
     }
 }
 
@@ -267,12 +270,18 @@ bool CQueue::isLetter(char ch)
  */
 map<string, int> CQueue::toMap(void)
 {
+    // 创建一个map，用于存储字符串和出现次数
     map<string, int> result;
+    // 当队列不为空时，循环执行以下操作
     while (this->isEmpty() == false)
     {
+        // 定义一个字符串变量，用于存储从队列中取出的字符串
         string tempWord;
+        // 从队列中取出一个字符串
         this->out(tempWord);
+        // 将取出的字符串作为key，出现次数作为value，存入map中
         result[tempWord]++;
     }
+    // 返回存储结果的map
     return result;
 }

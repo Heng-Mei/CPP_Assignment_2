@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-24 15:15:50
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-11-02 20:09:43
+ * @LastEditTime: 2023-11-03 14:38:29
  * @FilePath: \Assignment_2\Src\CGramCheck.cpp
  */
 #include "CGramCheck.h"
@@ -102,6 +102,26 @@ void CGramCheck::outLog(const char *fileName)
     }
     // 如果semicolonTotalFlag为false，则表示所有行没有semicolon problem
     if (semicolonTotalFlag == false)
+    {
+        outFile << "All lines: "
+                << "OK." << endl;
+    }
+    outFile << endl;
+
+    // 写入operator结果
+    outFile << "The operator result is: " << endl;
+    bool operatorTotalFlag = false;
+    for (int i = 0; i < this->operatorResult.size(); i++)
+    {
+        if (this->operatorResult[i].size() != 0)
+        {
+            operatorTotalFlag = true;
+            outFile << "Line " << i + 1 << ": "
+                    << "Operator problem: " << this->operatorResult[i] << endl;
+        }
+    }
+    // 如果 operatorTotalFlag 为 false，则表示所有行没有 operator problem
+    if (operatorTotalFlag == false)
     {
         outFile << "All lines: "
                 << "OK." << endl;
@@ -220,7 +240,6 @@ int CGramCheck::checkSemicolon(map<string, int> &times)
     {
         semicolonFlag = false;
     }
-    
 
     if (times["//"] == 1)
     {
@@ -332,6 +351,7 @@ void CGramCheck::checkPair(map<string, int> &times, const string &left, const st
     //     cerr << "Unknown character pair: " << left << " " << right << endl;
     //     exit(1);
     // }
+
     if (left != right)
     {
         this->pairResult[left] += times[left];
@@ -435,27 +455,32 @@ void CGramCheck::outPair(ofstream &outFile, const string &left, const string &ri
     // }
 
     outFile << "The " + left + " " + right + " pair result is: " << endl;
-    // 判断是否是 ' ' " "
     if (left == right)
     {
+        // 如果两个字符相等，则判断其出现次数是否为偶数
         if (this->pairResult[left] % 2 == 0)
         {
+            // 如果是偶数，则输出OK
             outFile << "OK" << endl;
         }
         else
         {
+            // 如果不是偶数，则输出其出现次数和字符
             outFile << "There are " << pairResult[left] << " " << left
                     << ", and the num isn't even" << endl;
         }
     }
     else
     {
+        // 如果两个字符不相等，则判断其出现次数是否相等
         if (this->pairResult[left] == this->pairResult[right])
         {
+            // 如果相等，则输出OK
             outFile << "OK" << endl;
         }
         else
         {
+            // 如果不相等，则输出其出现次数和字符
             outFile << "There are " << this->pairResult[left] << " '" + left + "' "
                     << "and " << this->pairResult[right] << " '" + right + "' " << endl;
         }
@@ -502,8 +527,13 @@ void CGramCheck::outPrintFile(const char *fileName)
  */
 void CGramCheck::checkLine(CQueue &line)
 {
+    // 检查运算符
+    this->operatorResult.push_back(CGramCheck::checkOperator(line));
+    // 将CQueue转换为map<string, int>
     map<string, int> times = line.toMap();
+    // 检查分号
     this->semicolonResult.push_back(CGramCheck::checkSemicolon(times));
+    // 检查成对符号
     this->checkPair(times, "{", "}");
     this->checkPair(times, "(", ")");
     this->checkPair(times, "'", "'");
@@ -517,5 +547,103 @@ void CGramCheck::checkLine(CQueue &line)
  */
 void CGramCheck::closeCPP()
 {
+    // 关闭CPP文件
     this->file.close();
+}
+
+/**
+ * @description: 判断一个字符串是否是单词
+ * @param {string} &word
+ * @return {bool} 是返回1
+ */
+bool CGramCheck::isWord(const string &word)
+{
+    for (auto &&ch : word)
+    {
+        // 检查字符是否为字母
+        if (CQueue::isLetter(ch) == false)
+        {
+            // 如果不是字母，返回false
+            return false;
+        }
+    }
+    // 如果都是字母，返回true
+    return true;
+}
+
+/**
+ * @description: 判断一个字符串是否是运算符
+ * @param {string} &word
+ * @return {bool} 是返回1
+ */
+bool CGramCheck::isOperator(const string &word)
+{
+    if (word == "=" || word == "+" || word == "-" || word == "*" || word == "/" || word == "%" || word == ">=" || word == "<=" || word == "==")
+    {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @description: 判断一个字符串是否是数字
+ * @param {string} &word
+ * @return {bool} 是返回1
+ */
+bool CGramCheck::isNum(const string &word)
+{
+    for (auto &&ch : word)
+    {
+        if (ch != '.' && (ch < '0' || ch > '9'))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * @description: 检查一行中是否存在运算符错误
+ * @param {CQueue} line
+ * @return {string} 返回出错的运算符
+ */
+string CGramCheck::checkOperator(CQueue line)
+{
+    string preWord, curWord, postWord;
+    line.out(curWord);
+    preWord = curWord;
+    while (line.isEmpty() == false)
+    {
+        // 判断当前单词是否是操作符
+        if (CGramCheck::isOperator(curWord) == true)
+        {
+            // 判断当前操作符是否是左操作符
+            if (preWord != ")" && !CGramCheck::isWord(preWord) && !CGramCheck::isNum(preWord))
+            {
+                // 不是左操作符，返回当前操作符
+                return curWord;
+            }
+            // 判断是否是最后一个单词
+            if (line.isEmpty() == true)
+            {
+                // 最后一个单词，返回当前操作符
+                return curWord;
+            }
+            // 读取下一个单词
+            line.out(postWord);
+            // 判断下一个单词是否是右操作符
+            if (postWord != "(" && !CGramCheck::isWord(postWord) && !CGramCheck::isNum(postWord))
+            {
+                // 不是右操作符，返回当前操作符
+                return curWord;
+            }
+            preWord = curWord;
+            curWord = postWord;
+            continue;
+        }
+        preWord = curWord;
+        // 读取当前单词
+        line.out(curWord);
+    }
+    return "";
 }

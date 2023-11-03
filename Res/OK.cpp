@@ -1,3 +1,9 @@
+/*
+ * @Date: 2023-11-02 19:51:25
+ * @LastEditors: Heng-Mei l888999666y@gmail.com
+ * @LastEditTime: 2023-11-03 13:37:01
+ * @FilePath: \Assignment_2\Res\OK.cpp
+ */
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -39,8 +45,8 @@ int main()
     gc.outLog(outputPath);
 
     //(4)输出检查结果
-    cout << "--------------------" << endl;
     cout << "The file content is:" << endl;
+    cout << "--------------------" << endl;
     CGramCheck::outPrintFile(inputPath);
     cout << "--------------------" << endl;
     cout << "The check result is:" << endl;
