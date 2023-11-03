@@ -1,13 +1,7 @@
 /*
  * @Date: 2023-10-24 21:07:00
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-11-03 14:32:20
- * @FilePath: \Assignment_2\main.cpp
- */
-/*
- * @Date: 2023-10-24 21:07:00
- * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-11-03 13:38:57
+ * @LastEditTime: 2023-11-03 14:59:31
  * @FilePath: \Assignment_2\main.cpp
  */
 #include <iostream>
