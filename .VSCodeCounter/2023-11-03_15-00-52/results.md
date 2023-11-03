@@ -1,26 +1,26 @@
 # Summary
 
-Date : 2023-11-02 20:09:06
+Date : 2023-11-03 15:00:52
 
 Directory b:\\C++\\Assignments\\Assignment_2
 
-Total : 8 files,  592 codes, 481 comments, 99 blanks, all 1172 lines
+Total : 8 files,  679 codes, 540 comments, 105 blanks, all 1324 lines
 
 Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| C++ | 7 | 519 | 475 | 96 | 1,090 |
+| C++ | 7 | 606 | 534 | 102 | 1,242 |
 | Markdown | 1 | 73 | 6 | 3 | 82 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 8 | 592 | 481 | 99 | 1,172 |
+| . | 8 | 679 | 540 | 105 | 1,324 |
 | . (Files) | 2 | 99 | 31 | 12 | 142 |
-| Inc | 2 | 125 | 20 | 20 | 165 |
-| Res | 2 | 33 | 19 | 12 | 64 |
-| Src | 2 | 335 | 411 | 55 | 801 |
+| Inc | 2 | 130 | 20 | 20 | 170 |
+| Res | 2 | 34 | 25 | 12 | 71 |
+| Src | 2 | 416 | 464 | 61 | 941 |
 
 Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)

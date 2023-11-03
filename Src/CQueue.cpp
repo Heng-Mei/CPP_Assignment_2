@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-10-23 16:18:42
  * @LastEditors: Heng-Mei l888999666y@gmail.com
- * @LastEditTime: 2023-11-03 14:57:43
+ * @LastEditTime: 2023-11-03 15:00:25
  * @FilePath: \Assignment_2\Src\CQueue.cpp
  */
 #include "CQueue.h"
@@ -210,6 +210,7 @@ void CQueue::inLine(const string &line)
 
             if (*it == '<' || *it == '/' || *it == '*')
             {
+                // 如果下一个字符是标签符，则将标签符添加到tempWord中
                 if (*(it + 1) == '<' || *(it + 1) == '*' || *(it + 1) == '/')
                 {
                     tempWord += *it;
@@ -218,11 +219,13 @@ void CQueue::inLine(const string &line)
                     tempWord.clear();
                     it++;
                 }
+                // 如果下一个字符不是标签符，则将标签符添加到tempWord中，并将it指针后移
                 else
                 {
                     tempWord += *it;
                 }
             }
+            // 如果当前字符不是标签符，则将当前字符添加到tempWord中
             else if (*it != ' ')
             {
                 tempWord += *it;
@@ -230,9 +233,11 @@ void CQueue::inLine(const string &line)
                 tempWord.clear();
             }
         }
+        // 如果当前字符是空格，则将当前字符添加到tempWord中
         else
         {
             tempWord += *it;
+            // 如果当前字符是行尾，则将tempWord添加到in中，并将tempWord清空
             if (&(*it) == &line.back())
             {
                 this->in(tempWord);
